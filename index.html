@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day Streak Tracker</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e5e7eb;
+      text-align: center;
+      gap: 1.2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    input {
+      padding: 12px;
+      width: 220px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      background: #facc15;
+      color: #0f172a;
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+    }
+
+    #resetBtn {
+      background: #dc2626;
+    }
+
+    #resetBtn:hover {
+      background: #f87171;
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.6);
+    }
+
+    #result {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    #streakCount {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #facc15;
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.7);
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Daily Streak Tracker</h1>
+
+  <p>Enter your aura level (1–1000)</p>
+  <input id="auraValue" type="number" placeholder="Enter value">
+  <button onclick="checkAura()">Reveal Aura</button>
+  <div id="result"></div>
+
+  <h2>Your Streak</h2>
+  <div id="streakCount">0</div>
+  <button id="streakBtn">Add Streak</button>
+  <button id="resetBtn">Reset Streak</button>
+
+  <script>
+    // Aura logic
+    function checkAura() {
+      const value = Number(document.getElementById("auraValue").value);
+      const result = document.getElementById("result");
+
+      if (value >= 900) result.textContent = "🔥 Eternal Cold Architect";
+      else if (value >= 700) result.textContent = "❄️ Winter Sovereign";
+      else if (value >= 500) result.textContent = "🌑 Shadow Conqueror";
+      else if (value >= 300) result.textContent = "⚔️ Frost Commander";
+      else if (value >= 150) result.textContent = "🌬️ Blizzard Adept";
+      else if (value >= 50) result.textContent = "🌫️ Fading Ember Apprentice";
+      else if (value >= 1) result.textContent = "💀 Lost Soul — Rebuild your aura";
+      else result.textContent = "Invalid number (1–1000)";
+    }
+
+    // Streak logic
+    const streakDisplay = document.getElementById("streakCount");
+    const streakBtn = document.getElementById("streakBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    let streak = Number(localStorage.getItem("dailyStreak")) || 0;
+    streakDisplay.textContent = streak;
+
+    streakBtn.addEventListener("click", () => {
+      streak++;
+      streakDisplay.textContent = streak;
+      localStorage.setItem("dailyStreak", streak);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      streak = 0;
+      streakDisplay.textContent = streak;
+      localStorage.setItem("dailyStreak", streak);
+    });
+  </script>
+
+</body>
+</html>
+
